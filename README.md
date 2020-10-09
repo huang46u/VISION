@@ -20,7 +20,7 @@ $ ./Panorama
 ## Result
 ### Original image
 <center class="half">
-    <img src="image0006.jpg" width="150" left-padding="15"/><img src="image0007.jpg" width="150"/>
+    <img src="image0006.jpg" /><img src="image0007.jpg"/>
 </center>
 
 ### Panorama
