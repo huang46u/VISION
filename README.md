@@ -24,5 +24,5 @@ $ ./Panorama
 </center>
 
 ### Panorama
-![panorama](build/panorama.jpg)
+![panorama](panorama.jpg)
 
