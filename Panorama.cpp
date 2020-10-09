@@ -8,7 +8,7 @@
 #include <Imagine/LinAlg.h>
 #include <vector>
 #include <sstream>
-using namespace Imagine;
+using namespace Imagine; 
 using namespace std;
 
 // Record clicks in two images, until right button click
@@ -92,6 +92,16 @@ void growTo(float& x0, float& y0, float& x1, float& y1, float x, float y) {
     if(y<y0) y0=y;
     if(y>y1) y1=y;    
 }
+Color meanColor(const Color& j,const Color& k) {
+    /*if (j[0] + j[1] + j[2] < 20)
+        return k;
+    if (k[0] + k[1] + k[2] < 20)
+        return j;
+    */
+    return Color((j[0] + k[0]) / 2, (j[1] + k[1]) / 2, (j[2] + k[2]) / 2);
+
+}
+
 
 // Panorama construction
 void panorama(const Image<Color,2>& I1, const Image<Color,2>& I2,
@@ -139,51 +149,14 @@ void panorama(const Image<Color,2>& I1, const Image<Color,2>& I2,
                 else
                 {   
                     auto e= I1.interpolate(v[0],v[1]);
-                    I(i,j)=I1.interpolate(v[0],v[1]);
+                    I(i,j)= meanColor(I(i,j),e);
                 }
                 
             }   
         
         }
     }
-    //PUSH
-    /*Vector<float> v(3);
-    float x0=0, y0=0, x1=I1.width(), y1=I1.height();
-    
-    v[0]=0; v[1]=0; v[2]=1;
-    v=inverse(H)*v; v/=v[2];
-    growTo(x0, y0, x1, y1, v[0], v[1]);
 
-    v[0]=I2.width(); v[1]=0; v[2]=1;
-    v=inverse(H)*v; v/=v[2];
-    growTo(x0, y0, x1, y1, v[0], v[1]);
-
-    v[0]=I2.width(); v[1]=I2.height(); v[2]=1;
-    v=inverse(H)*v; v/=v[2];
-    growTo(x0, y0, x1, y1, v[0], v[1]);
-
-    v[0]=0; v[1]=I2.height(); v[2]=1;
-    v=inverse(H)*v; v/=v[2];
-    growTo(x0, y0, x1, y1, v[0], v[1]);
-
-    cout << "x0 x1 y0 y1=" << x0 << ' ' << x1 << ' ' << y0 << ' ' << y1<<endl;
-
-    Image<Color> I(int(x1-x0), int(y1-y0));
-    setActiveWindow( openWindow(I.width(), I.height()) );
-    I.fill(WHITE);
-    for (int i = 0; i < I.width(); i++) {
-        for (int j = 0; j < I.height(); j++) {
-            v[0]=i+x0;v[1]=j+y0;
-            if(v[0]>0 && v[1]>0 && v[0]<I1.width() && v[1]<I1.height())
-                I(i,j)=I1(v[0],v[1]);
-            v=H*v;
-            v/=v[2];
-            if(v[0]>0 && v[1]>0 && v[0]<I2.width() && v[1]<I2.height()){
-                    I(i,j)=I2.interpolate(v[0],v[1]);
-            }   
-        
-        }
-    }*/ 
     save(I,"panorama.jpg",100);
     display(I,0,0);
 }
