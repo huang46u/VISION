@@ -1,6 +1,6 @@
 ## Panorama
 
-**Panorama** is a little application  construct a panoram from some raw images(support only 2 images for instance )
+**Panorama** is a little application  construct a panoram from some raw images(support only 2 images)
 
 ### Dependence
 
